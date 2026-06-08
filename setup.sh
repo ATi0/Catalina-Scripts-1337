@@ -1,22 +1,45 @@
 #!/usr/bin/env zsh
 
-source ./app_installer.zsh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+reload() {
+    source ~/.zshrc
+    source ~/.zshenv
+    # source ~/.zprofile # if applicable
+}
 
 #Prerequisites
-##load env
+printf "You can run the script in 2 ways.\n"
+printf "0: [Setup a 'config.env' with all the parameters setup]\n"
+printf "1: [Setup the Script now in an Interactive wizard]\n"
 
-##Install Dependencies
-###brew
+read setup_mode
+case $setup_mode in
+    0)
+    printf "Loading config.env"
+    source $SCRIPT_DIR/config.env || {
+        printf "ERROR: Failed to load $SCRIPT_DIR/config.env"
+        exit 1
+        }
+    ;;
+    *)
+    Interactive_wizard
+    ;;
+esac
 
-###python
-####openssl
-python_wizard
-
-#Install goinfre apps
-app_installer_wizard
+Interactive_wizard(){
+# ##Install Dependencies
+    brew_wizard
+    openssl_wizard
+    python_wizard
+# #Install goinfre apps
+# app_installer_wizard
 
 #Startup agent Setup
 
 #Storage Cleaner
 
 #Restore setup
+}
+
+
