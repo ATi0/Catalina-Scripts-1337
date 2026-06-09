@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source config.env
 
 # Manual Installer for openssl is not recommended since it hasn't been properly tested
@@ -8,12 +9,10 @@ openssl_installer(){
     if openssl_installation_method = "brew"; then{
         brew install openssl &> /dev/null
     }
-    fi
-    elif then{
+    elif ;then{
         openssl_installation_method
     }
     fi
-
     cd
     curl -LO https://github.com/openssl/openssl/releases/download/openssl-4.0.0/openssl-4.0.0.tar.gz
     tar -xzvf openssl-4.0.0.tar.gz

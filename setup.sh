@@ -4,14 +4,21 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 reload() {
     source ~/.zshrc
-    source ~/.zshenv
-    # source ~/.zprofile # if applicable
+    source ~/.bashrc
 }
+
+if ! [-f ~/.Catalina_Scripts.sh]; then
+    touch .Catalina_Scripts.sh
+    echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.zshrc
+    echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.bashrc
+    reload
+fi
 
 #Prerequisites
 printf "You can run the script in 2 ways.\n"
 printf "0: [Setup a 'config.env' with all the parameters setup]\n"
 printf "1: [Setup the Script now in an Interactive wizard]\n"
+printf "2: [Stop the script]\n"
 
 read setup_mode
 case $setup_mode in
@@ -22,7 +29,15 @@ case $setup_mode in
         exit 1
         }
     ;;
+
+    2)
+    clear
+    printf "Goodbye."
+    exit 0
+    ;;
+
     *)
+    print "Starting Interactive Wizard.\n"
     Interactive_wizard
     ;;
 esac
