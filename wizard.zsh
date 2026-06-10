@@ -109,5 +109,8 @@ python_wizard()
 }
 
 app_installer_wizard(){
+    printf "This wizard configures install for app in a public goinfre folder.\n"
+    printf "every time on login, the script checks for apps in '/goinfre/Applications'.\n"
+    printf "If they are not installed, an installation script runs in the background to install them for the current post\n"
 
 }
