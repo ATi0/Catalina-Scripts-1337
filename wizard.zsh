@@ -34,6 +34,7 @@ brew_wizard(){
             printf "Homebrew path set to $brew_path/homebrew "
     else
         printf "Brew is already installed at $(which brew)\n"
+        brew_path=NULL
     fi
 }
 
@@ -44,18 +45,36 @@ openssl_wizard(){
         printf "Openssl must be installed for python to work. Skipping Openssl will skip the python installer.\n"
         printf "It is recommended to use homebrew as the installation method.\n"
         printf "0: [Install Using Homebrew]\n"
-        printf "1: [Install Manually]\n"
+        printf "1: [Install without Homebrew (beta)]\n"
         printf "2: [Skip openssl and python installer]\n"
         printf "[Default: 0]"
         printf ---------------------------------------------------------------------------\n
-        case $
-
+        read answer
+        case $answer in
+            1)
+            openssl_opt = "manual"
+            printf "Recommended Path: /Users/$USER/.local\n"
+            printf "Please enter openssl install path:\n"
+            read openssl_path
+            ;;
+            2)
+            openssl_opt = NULL
+            python_opt = NULL
+            ;;
+            *)
+            openssl_opt = brew
+            openssl_path = $(brew --prefix openssl) # needs to be run after openssl is installed through brew
+            ;;
+        esac
+    else
+        print "OpenSSL is already installed under $(which openssl).\n"
+        # set openssl prefix path reliably
     fi
 }
+
+
 python_wizard()
 {
-
-
     if ! command -v python3.14 &> /dev/null;
         then
             printf "Would you like to install python 3.14?"
@@ -65,6 +84,7 @@ python_wizard()
             printf "3: Skip"
             printf "[Default: 0]"
             printf ---------------------------------------------------------------------------\n
+            read python_opt
             case $python_opt in
                 1)
                     python_path="/goinfre/$USER/python"
@@ -81,8 +101,13 @@ python_wizard()
                     ;;
             esac
             python_installer
-        else
-            printf "Python3.14 is installed at $(which python3.14)"
+    else
+        printf "Python3.14 is installed at $(which python3.14)"
+        python_path=NULL
     fi
+
+}
+
+app_installer_wizard(){
 
 }

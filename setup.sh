@@ -2,6 +2,8 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+source $SCRIPT_DIR/wizard.zsh
+
 reload() {
     source ~/.zshrc
     source ~/.bashrc
@@ -47,8 +49,8 @@ Interactive_wizard(){
     brew_wizard
     openssl_wizard
     python_wizard
-# #Install goinfre apps
-# app_installer_wizard
+    app_installer_wizard
+
 
 #Startup agent Setup
 
