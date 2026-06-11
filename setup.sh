@@ -9,7 +9,7 @@ reload() {
     source ~/.bashrc
 }
 
-if ! [-f ~/.Catalina_Scripts.sh]; then
+if ! [ -f ~/.Catalina_Scripts.sh] &> /dev/null; then
     touch .Catalina_Scripts.sh
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.zshrc
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.bashrc
@@ -50,8 +50,7 @@ Interactive_wizard(){
     openssl_wizard
     python_wizard
     app_installer_wizard
-
-
+}
 #Startup agent Setup
 
 #Storage Cleaner
