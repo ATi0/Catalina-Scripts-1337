@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 source $SCRIPT_DIR/installers.zsh
 
@@ -52,18 +52,18 @@ openssl_wizard(){
         read answer
         case $answer in
             1)
-            openssl_opt = "manual"
+            openssl_opt="manual"
             printf "Recommended Path: /Users/$USER/.local\n"
             printf "Please enter openssl install path:\n"
             read openssl_path
             ;;
             2)
-            openssl_opt = NULL
-            python_opt = NULL
+            openssl_opt=NULL
+            python_opt=NULL
             ;;
             *)
-            openssl_opt = brew
-            openssl_path = $(brew --prefix openssl) # needs to be run after openssl is installed through brew
+            openssl_opt=brew
+            openssl_path=$(brew --prefix openssl) # needs to be run after openssl is installed through brew
             ;;
         esac
     else
@@ -97,7 +97,7 @@ python_wizard()
                     return 0
                     ;;
                 *)
-                    python_path="~/.local/"
+                    python_path="/Users/$USER/.local/"
                     ;;
             esac
             python_installer

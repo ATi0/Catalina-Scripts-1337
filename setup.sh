@@ -18,7 +18,7 @@ Interactive_wizard(){
 }
 
 if ! [ -f ~/.Catalina_Scripts.sh ]; then
-    touch /Users/$USER/.Catalina_Scripts.sh
+    touch /Users/$USER/ .Catalina_Scripts.sh
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.zshrc
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.bashrc
     reload

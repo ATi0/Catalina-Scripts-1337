@@ -1,18 +1,17 @@
 #!/usr/bin/env zsh
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Manual Installer for openssl is not recommended since it hasn't been properly tested
 # Homebrew is recommended for installing openssl
 
-openssl_installer(){
-    if openssl_installation_method = "brew"; then{
+openssl_installer()
+{
+    if [[openssl_installation_method == "brew"]]; then
         brew install openssl &> /dev/null
         openssl_path=$(brew --prefix openssl)
-    }
     fi
-    elif ;then{
-        openssl_installation_method = "manual"; then{
+    elif [[openssl_installation_method == "manual"]]; then
         cd $temp_path
         curl -LO https://github.com/openssl/openssl/releases/download/openssl-4.0.0/openssl-4.0.0.tar.gz
         tar -xzvf openssl-4.0.0.tar.gz
@@ -20,8 +19,6 @@ openssl_installer(){
         perl ./Configure --prefix=$openssl_path --openssldir=$openssl_path/openssl no-ssl3 no-ssl3-method no-zlib darwin64-x86_64-cc enable-ec_nistp_64_gcc_128
         make
         make install MANDIR=$openssl_path/openssl/share/man MANSUFFIX=ssl
-        }
-    }
     fi
 }
 
@@ -30,8 +27,8 @@ python_installer()
 {
     printf "Installing Python."
     printf "\nCloning python installer to ~/Downloads"
-    mkdir -p /goinfre/$USER/.Catalina_Scripts_Assets
-    curl -O https://www.python.org/ftp/python/3.14.4/Python-3.14.4.tar.xz
+    cd $temp_path
+    curl -LO https://www.python.org/ftp/python/3.14.4/Python-3.14.4.tar.xz
     tar -xvf Python-3.14.4.tar.xz
     cd Python-3.14.4
     ./configure --prefix=$python_path \
