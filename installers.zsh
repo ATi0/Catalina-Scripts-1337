@@ -1,17 +1,19 @@
 #!/usr/bin/env zsh
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source $SCRIPT_DIR/wizards.zsh
 
 # Manual Installer for openssl is not recommended since it hasn't been properly tested
 # Homebrew is recommended for installing openssl
 
+retries=0
 openssl_installer()
 {
-    if [[openssl_installation_method == "brew"]]; then
+    if [[$openssl_installation_method == "brew"]]; then
         brew install openssl &> /dev/null
         openssl_path=$(brew --prefix openssl)
     fi
-    elif [[openssl_installation_method == "manual"]]; then
+    elif [[$openssl_installation_method == "manual"]]; then
         cd $temp_path
         curl -LO https://github.com/openssl/openssl/releases/download/openssl-4.0.0/openssl-4.0.0.tar.gz
         tar -xzvf openssl-4.0.0.tar.gz
@@ -20,6 +22,12 @@ openssl_installer()
         make
         make install MANDIR=$openssl_path/openssl/share/man MANSUFFIX=ssl
     fi
+    elif [[$openssl_installation_method == "NULL"]]; then
+    printf "Skipping openssl and python install.\n"
+    return 0
+    fi
+    else; then return 0
+    ;;
 }
 
 # Python 3.14.4 Installer Scripts

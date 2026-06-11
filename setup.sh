@@ -3,6 +3,7 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 source $SCRIPT_DIR/wizard.zsh
+source $SCRIPT_DIR/config.env
 
 reload() {
     source ~/.zshrc
@@ -18,7 +19,7 @@ Interactive_wizard(){
 }
 
 if ! [ -f ~/.Catalina_Scripts.sh ]; then
-    touch /Users/$USER/ .Catalina_Scripts.sh
+    touch /Users/$USER/.Catalina_Scripts.sh
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.zshrc
     echo "source /Users/$USER/.Catalina_Scripts.sh" >> /Users/$USER/.bashrc
     reload
@@ -32,14 +33,9 @@ printf "2: [Stop the script]\n"
 
 read setup_mode
 case $setup_mode in
-    0)
-    printf "Loading config.env"
-    source $SCRIPT_DIR/config.env || {
-        printf "ERROR: Failed to load $SCRIPT_DIR/config.env"
-        exit 1
-        }
+    1)
+    printf "Running..\n"
     ;;
-
     2)
     clear
     printf "Goodbye."
@@ -49,6 +45,7 @@ case $setup_mode in
     *)
     print "Starting Interactive Wizard.\n"
     Interactive_wizard
+    printf "Running..\n"
     ;;
 esac
 
